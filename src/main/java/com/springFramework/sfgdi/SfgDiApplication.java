@@ -1,9 +1,6 @@
 package com.springFramework.sfgdi;
 
-import com.springFramework.sfgdi.controller.ConstructorInjectedController;
-import com.springFramework.sfgdi.controller.MyController;
-import com.springFramework.sfgdi.controller.PropertyInjectController;
-import com.springFramework.sfgdi.controller.SetterInjectedController;
+import com.springFramework.sfgdi.controller.*;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
@@ -15,9 +12,19 @@ public class SfgDiApplication {
 //		SpringApplication.run(SfgDiApplication.class, args);
 		ApplicationContext context = SpringApplication.run(SfgDiApplication.class, args);
 
-		MyController myController = (MyController) context.getBean(MyController.class);
-		String greeting = myController.hello();
-		System.out.println(greeting);
+		PetController petController = context.getBean("petController", PetController.class);
+		System.out.println("-------- The Best Pet is --------");
+		System.out.println(petController.whichPetIsTheBest());
+
+		I18nController i18nController = context.getBean(I18nController.class);
+		System.out.println(i18nController.getGreeting());
+
+		MyController myController =  context.getBean(MyController.class);
+//		String greeting = myController.hello();
+//		System.out.println(greeting);
+
+		System.out.println("----------Primary Bean--------------");
+		System.out.println(myController.getGreeting());
 
 
 		System.out.println("----------Property--------------");
