@@ -1,14 +1,25 @@
 package com.springFramework.sfgdi.config;
 
 import com.springFramework.sfgdi.controller.PropertyInjectController;
+import com.springFramework.sfgdi.dataSource.FakeDataSource;
 import com.springFramework.sfgdi.services.*;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Primary;
-import org.springframework.context.annotation.Profile;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.context.annotation.*;
 
+//@PropertySource("classpath:datasource.properties")
+@EnableConfigurationProperties(SfgConstructorConfig.class)
 @Configuration
 public class GreetingServiceConfig {
+
+    @Bean
+    FakeDataSource fakeDataSource(SfgConfiguration sfgConfiguration){
+        FakeDataSource fakeDataSource= new FakeDataSource();
+        fakeDataSource.setUsername(sfgConfiguration.getUsername());
+        fakeDataSource.setPassword(sfgConfiguration.getPassword());
+        fakeDataSource.setJdbcurl(sfgConfiguration.getJdbcurl());
+        return fakeDataSource;
+    }
 
     @Profile({"ES","default"})
     @Bean("I18nGreetingService")
