@@ -1,38 +1,23 @@
-# Dependency Injection Examples
+# How Spring Boot’s Autoconfigurations Work
 
-This repository is for an example application built in my [Spring Framework 5 - Beginner to Guru](https://www.udemy.com/testing-spring-boot-beginner-to-guru/?couponCode=GITHUB_REPO) online course
+https://www.marcobehler.com/guides/spring-boot-autoconfiguration
 
-As you work through the course, please feel free to fork this repository to your out GitHub repo. Most links contain links 
-to source code changes. If you encounter a problem you can compare your code to the lesson code. [See this link for help with compares](https://github.com/springframeworkguru/spring5webapp/wiki#getting-an-error-but-cannot-find-what-is-different-from-lesson-source-code)
+## Final Answer: What is Spring Boot?
+Spring Boot is just a couple of AutoConfigurations classes (== normal Spring @Configurations), that create @Beans for you if certain @Conditions are met.
 
-## All Spring Framework Guru Courses
-### Spring Framework 5
-* [Spring Framework 5: Beginner to Guru](https://www.udemy.com/testing-spring-boot-beginner-to-guru/?couponCode=GITHUB_REPO) - Get the most modern and comprehensive course available for the Spring Framework! Join over 8,200 over Guru's in an Slack community exclusive to this course! More than 3,700 students have given this 53 hour course a 5 star review!
-* [Spring Boot Microservices with Spring Cloud Beginner to Guru](https://www.udemy.com/course/spring-boot-microservices-with-spring-cloud-beginner-to-guru/?referralCode=6142D427AE53031FEF38) - Master Microservice Architectures Using Spring Boot 2 and Cloud Based Deployments with Spring Cloud and Docker
-* [Reactive Programming with Spring Framework 5](https://www.udemy.com/reactive-programming-with-spring-framework-5/?couponCode=GITHUB_REPO_SF5B2G) - Keep your skills razor sharp and take a deep dive into Reactive Programming!
-* [Testing Spring Boot: Beginner to Guru](https://www.udemy.com/testing-spring-boot-beginner-to-guru/?couponCode=GITHUB_REPO_SF5B2G) - ** Best Selling Course** Become an expert in testing Java and Spring Applications with JUnit 5, Mockito and much more!
+Three of the most important conditions are
 
-### SQL
-* [SQL Beginner to Guru: MySQL Edition](https://www.udemy.com/sql-beginner-to-guru-mysql-edition/?couponCode=GITHUB_REPO_SF5B2G) - SQL is a fundamental must have skill, which employers are looking for. Learn to master SQL on MySQL, the worlds most popular database!
+@ConditionalOnClass. Checking for dependencies or rather specific classes of dependencies (think: Tomcat, HikariCP, etc).
 
-### DevOps
-* [Apache Maven: Beginner to Guru](https://www.udemy.com/apache-maven-beginner-to-guru/?couponCode=GITHUB_REPO_SF5B2G) - **Best Selling Course** Take the mystery out of Apache Maven. Learn how to use Maven to build your Java and Spring Boot projects!
-* [OpenAPI: Beginner to Guru](https://www.udemy.com/course/openapi-beginner-to-guru/?referralCode=0E7F511C749013CA6AAD) - Master OpenAPI (formerly Swagger) to Create Specifications for Your APIs
-* [Docker for Java Developers](https://www.udemy.com/docker-for-java-developers/?couponCode=GITHUB_REPO_SF5B2G) - Best Selling Course on Udemy! Learn how you can supercharge your development by leveraging Docker. Collaborate with other students in a Slack community exclusive to the course!
-* [Spring Framework DevOps on AWS](https://www.udemy.com/spring-core-devops-on-aws/?couponCode=GITHUB_REPO_SF5B2G) - Learn how to build and deploy Spring applications on Amazon AWS!
-* [Ready for Production with Spring Boot Actuator](https://www.udemy.com/ready-for-production-with-spring-boot-actuator/?couponCode=GITHUB_REPO_SF5B2G) - Learn how to leverage Spring Boot Actuator to monitor your applications running in production.
+@ConditionalOnProperty. Self-explanatory.
 
-### Web Development with Spring Framework
-* [Angular 4 Java Developers](https://www.udemy.com/angular-4-java-developers/?couponCode=GITHUB_REPO_SF5B2G) - Learn how to use Angular with Spring Boot. Two flaming hot technologies! This is the only course on Udemy where you can learn how to use JHipster to rapidly build your next application! Also, be sure to checkout the Slack community for this course!
-* [Mastering Thymeleaf with Spring Boot](https://www.udemy.com/mastering-thymeleaf-with-spring/?couponCode=GITHUB_REPO_SF5B2G) - Once you learn Thymeleaf, you'll never want to go back to using JSPs for web development!
+@ConditionalOnMissingBean. If the user specified his own, e.g. DataSource, already, then Spring Boot won’t try to create its auto-configured one.
 
-### Spring Framework 4
-* [Spring Core](https://www.udemy.com/spring-core/) - Learn the core of Spring Framework 4!
-* [Spring Core Advanced](https://www.udemy.com/spring-core-advanced-beyond-the-basics/?couponCode=GITHUB_REPO_SF5B2G) - Go beyond the basics! Learn about Aspect Oriented Programming, Spring Security, using Spring Events, JMS and more!
+That is what is meant by "opinionated defaults" on the Spring Boot homepage.
 
-## Connect with Spring Framework Guru
-* Spring Framework Guru [Blog](https://springframework.guru/)
-* Subscribe to Spring Framework Guru on [YouTube](https://www.youtube.com/channel/UCrXb8NaMPQCQkT8yMP_hSkw)
-* Like Spring Framework Guru on [Facebook](https://www.facebook.com/springframeworkguru/)
-* Follow Spring Framework Guru on [Twitter](https://twitter.com/spring_guru)
-* Connect with John Thompson on [LinkedIn](http://www.linkedin.com/in/springguru)
+### What is the difference between Spring and Spring Boot?
+Spring, as in Spring Framework is a set of tools that help you build Java applications faster (hopefully).
+
+After having read this article, you should understand that Spring Boot merely preconfigures these tools for you with sane settings (i.e. let’s always read in an classpath:application.properties file and use the property server.port to preconfigure a Tomcat server on a specific port). Hence, Spring Boot builds on top of Spring Framework.
+
+Things get confusing, though, as the current marketing push is to call everything Spring Boot or Spring Framework simply "Spring"
